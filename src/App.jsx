@@ -114,21 +114,12 @@ export default function App() {
           </div>
 
           <div className="hero-visual-large">
-            <div className="video-browser-frame">
-              <div className="browser-header">
-                <div className="dots">
-                  <span></span><span></span><span></span>
-                </div>
-                <div className="url-bar">benditocapricho.app</div>
-              </div>
+            <div className="video-player-container">
               <div className="video-container-refined">
-                {/* Translucent overlay to block direct YouTube interactions/redirects */}
-                <div className="video-blocker-overlay" />
-                
                 <iframe
                   ref={iframeRef}
                   className="saas-video-iframe-refined"
-                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1"
+                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=1&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
