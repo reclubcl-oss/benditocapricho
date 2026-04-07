@@ -43,7 +43,6 @@ export default function App() {
 
   const handleHeroClick = () => {
     if (iframeRef.current) {
-      // Send unMute and playVideo commands to YouTube iframe
       iframeRef.current.contentWindow.postMessage(JSON.stringify({
         event: 'command',
         func: 'unMute',
@@ -55,7 +54,6 @@ export default function App() {
         args: ''
       }), '*')
       
-      // Show sound icon briefly
       setShowVolumeIcon(true)
       setTimeout(() => setShowVolumeIcon(false), 1500)
     }
@@ -74,116 +72,143 @@ export default function App() {
         <div className="orb orb-3" />
       </div>
 
-      {/* ===== VIDEO HERO ===== */}
-      <section className="video-hero" onClick={handleHeroClick}>
-        <div className="video-bg-container">
-          <iframe
-            ref={iframeRef}
-            className="video-bg-iframe"
-            src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            preload="auto"
-          ></iframe>
-        </div>
-        <div className="video-overlay" />
-        
-        {showVolumeIcon && (
-          <div className="volume-indicator">
-            <span className="volume-emoji">🔊</span>
-          </div>
-        )}
-
-        <div className="video-content-simple">
-          <div className="hero-header-content">
-            <h1 className="hero-main-title">BENDITO CAPRICHO STORE</h1>
-            <div className="hero-logo-box">
-              <img src="/hero-logo.png" className="hero-title-img" alt="Bendito Capricho Logo" />
-            </div>
-          </div>
-          
-          <div className="hero-spacer" />
-          
-          <button className="hero-bottom-btn" onClick={scrollToBonuses}>
-            CONOCE NUESTRA VISIÓN
-            <span className="btn-arrow">↓</span>
-          </button>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="scroll-indicator">
-          <div className="scroll-dot" />
-        </div>
-      </section>
-
-      {/* Navbar - Simplified */}
+      {/* Navbar SaaS Style */}
       <nav className="navbar">
-        <div className="container">
-          <div className="nav-logo">BENDITO CAPRICHO</div>
+        <div className="container nav-content">
+          <div className="nav-logo-group">
+            <span className="nav-logo-icon">✦</span>
+            <div className="nav-logo-text">BENDITO CAPRICHO</div>
+          </div>
+          <div className="nav-actions">
+            <button className="nav-btn-primary" onClick={scrollToBonuses}>Unirse Ahora</button>
+          </div>
         </div>
       </nav>
 
-      {/* Stats bar */}
-      <div className="stats-bar">
+      {/* ===== SAAS HERO SECTION ===== */}
+      <section className="saas-hero">
+        <div className="container hero-grid">
+          <div className="hero-content">
+            <div className="hero-brand">
+              <span className="hero-brand-label">Concept Store</span>
+            </div>
+            <h1 className="hero-title">
+              BENDITO CAPRICHO <span className="text-gradient">STORE</span>
+            </h1>
+            <p className="hero-description">
+              Transformamos la visión de tus proyectos en realidades impactantes. Únete a la comunidad de creadores más exclusiva y accede a recursos diseñados para el éxito.
+            </p>
+            <div className="hero-cta-group">
+              <button className="btn-saas-primary" onClick={scrollToBonuses}>
+                Conoce Nuestra Visión
+              </button>
+              <div className="hero-secondary-info">
+                <span className="info-icon">✓</span>
+                Comunidad Activa
+              </div>
+            </div>
+
+            <div className="hero-mini-stats">
+              <div className="mini-stat">
+                <span className="stat-num">+500</span>
+                <span className="stat-txt">Miembros</span>
+              </div>
+              <div className="mini-stat">
+                <span className="stat-num">4.9★</span>
+                <span className="stat-txt">Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-visual" onClick={handleHeroClick}>
+            <div className="video-browser-frame">
+              <div className="browser-header">
+                <div className="dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div className="url-bar">benditocapricho.app</div>
+              </div>
+              <div className="video-container">
+                <iframe
+                  ref={iframeRef}
+                  className="saas-video-iframe"
+                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                ></iframe>
+                {showVolumeIcon && (
+                  <div className="saas-volume-indicator">
+                    <span>🔊</span>
+                  </div>
+                )}
+                <div className="video-interact-overlay">
+                  <span className="unmute-text">Click para Sonido</span>
+                </div>
+              </div>
+            </div>
+            <div className="glow-effect"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats bar - Integrated into the flow better */}
+      <div className="features-intro">
         <div className="container">
-          <div className="hero-stats">
-            <div className="stat-item">
-              <div className="stat-value">+500</div>
-              <div className="stat-label">Miembros activos</div>
+          <div className="stats-row">
+            <div className="saas-stat">
+              <div className="saas-stat-num">+500</div>
+              <div className="saas-stat-label">Miembros activos</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-value">4.9★</div>
-              <div className="stat-label">Valoración promedio</div>
+            <div className="saas-stat">
+              <div className="saas-stat-num">4.9★</div>
+              <div className="saas-stat-label">Valoración promedio</div>
             </div>
-            <div className="stat-item">
-              <div className="stat-value">100%</div>
-              <div className="stat-label">Satisfacción garantizada</div>
+            <div className="saas-stat">
+              <div className="saas-stat-num">100%</div>
+              <div className="saas-stat-label">Satisfacción</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bonuses */}
-      <section className="section" id="bonos">
+      {/* Bonuses - SaaS Feature Style */}
+      <section className="section bg-alt" id="bonos">
         <div className="container">
-          <div className="section-header">
-            <span className="section-label">Exclusivo</span>
-            <h2 className="section-title">Nuestra Visión y<br />Bonos Exclusivos</h2>
-            <p className="section-subtitle">Lo que nos mueve y los beneficios que recibes al formar parte de nuestra comunidad.</p>
+          <div className="saas-section-header">
+            <span className="saas-badge">Beneficios</span>
+            <h2 className="saas-section-title">Impulsa tu proyecto<br />con nuestra comunidad</h2>
+            <p className="saas-section-subtitle">Lo que nos mueve y los beneficios exclusivos al formar parte de nuestra visión.</p>
           </div>
-          <div className="bonuses-grid">
+          <div className="saas-features-grid">
             {BONUSES.map((bonus, i) => (
-              <div key={i} className="glass-card bonus-card">
-                <span className="bonus-icon">{bonus.icon}</span>
-                <div className="bonus-title">{bonus.title}</div>
-                <p className="bonus-desc">{bonus.desc}</p>
+              <div key={i} className="saas-feature-card">
+                <div className="feature-icon">{bonus.icon}</div>
+                <h3 className="feature-title">{bonus.title}</h3>
+                <p className="feature-desc">{bonus.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="divider" />
-
-      {/* Testimonials */}
+      {/* Testimonials - SaaS Trust Style */}
       <section className="section" id="testimonios">
         <div className="container">
-          <div className="section-header">
-            <span className="section-label">Testimonios</span>
-            <h2 className="section-title">Lo que dicen nuestros<br />clientes</h2>
-            <p className="section-subtitle">Historias reales de personas que transformaron sus proyectos.</p>
+          <div className="saas-section-header">
+            <span className="saas-badge">Comunidad</span>
+            <h2 className="saas-section-title">Lo que dicen los creadores</h2>
           </div>
-          <div className="testimonials-grid">
+          <div className="saas-testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="glass-card testimonial-card">
-                <div className="testimonial-stars">★★★★★</div>
-                <p className="testimonial-text">"{t.text}"</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">{t.name[0]}</div>
-                  <div>
-                    <div className="author-name">{t.name}</div>
-                    <div className="author-handle">{t.handle}</div>
+              <div key={i} className="saas-testimonial-card">
+                <div className="t-stars">★★★★★</div>
+                <p className="t-text">"{t.text}"</p>
+                <div className="t-author">
+                  <div className="t-avatar">{t.name[0]}</div>
+                  <div className="t-info">
+                    <div className="t-name">{t.name}</div>
+                    <div className="t-handle">{t.handle}</div>
                   </div>
                 </div>
               </div>
@@ -192,24 +217,36 @@ export default function App() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="cta-section">
+      {/* CTA Final SaaS Style */}
+      <section className="cta-saas-section">
         <div className="container">
-          <div className="cta-card">
-            <h2 className="cta-title">¿Listo para unirte a la visión?</h2>
-            <p className="cta-subtitle">Únete ahora y empieza a transformar tu proyecto con el apoyo de nuestra comunidad estratégica.</p>
-            <button className="btn-primary" onClick={scrollToBonuses}>
+          <div className="cta-saas-content">
+            <h2 className="cta-saas-title">¿Listo para el siguiente nivel?</h2>
+            <p className="cta-saas-subtitle">Tu visión merece el mejor respaldo. Únete hoy mismo.</p>
+            <button className="btn-saas-xl" onClick={scrollToBonuses}>
               Únete a la Comunidad ✦
             </button>
+            <p className="cta-saas-note">Sin compromisos • Acceso inmediato</p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* Footer SaaS Style */}
+      <footer className="saas-footer">
         <div className="container">
-          <div className="footer-logo">BENDITO CAPRICHO</div>
-          <p className="footer-text">© 2025 Bendito Capricho. Todos los derechos reservados.</p>
+          <div className="footer-content">
+            <div className="footer-brand">
+              <span className="f-logo">✦ BENDITO CAPRICHO</span>
+              <p className="f-tagline">Concept Store & Community</p>
+            </div>
+            <div className="footer-bottom">
+              <p>© 2025 Bendito Capricho. Todos los derechos reservados.</p>
+              <div className="footer-links">
+                <a href="#bonos">Bonos</a>
+                <a href="#testimonios">Testimonios</a>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
