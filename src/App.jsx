@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import ReactPlayer from 'react-player/youtube'
 import './index.css'
 
 const BONUSES = [
@@ -40,37 +41,15 @@ const TESTIMONIALS = [
 export default function App() {
   const [showVolumeIcon, setShowVolumeIcon] = useState(false)
   const [hasUnmuted, setHasUnmuted] = useState(false)
-  const iframeRef = useRef(null)
+  const playerRef = useRef(null)
 
   // Global click listener to unMute video on first interaction
   useEffect(() => {
     const handleGlobalInteraction = () => {
-      if (!hasUnmuted && iframeRef.current) {
-        // Re-send play to kickstart if mobile browser blocked initial autoplay
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'playVideo',
-          args: []
-        }), '*')
-        // Force HD quality via JS API if possible
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'setPlaybackQuality',
-          args: ['hd1080']
-        }), '*')
+      if (!hasUnmuted && playerRef.current) {
         
         // Go back to the very beginning
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'seekTo',
-          args: [0, true]
-        }), '*')
-
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'unMute',
-          args: []
-        }), '*')
+        playerRef.current.seekTo(0, 'seconds')
         
         setShowVolumeIcon(true)
         setHasUnmuted(true)
@@ -136,25 +115,36 @@ export default function App() {
                 {/* Translucent overlay to block direct YouTube interactions/re-directions */}
                 <div className="video-blocker-overlay" />
                 
-                <iframe
-                  ref={iframeRef}
+                <ReactPlayer
+                  ref={playerRef}
+                  url="https://www.youtube.com/watch?v=PKkBfjEVO1Q"
                   className="saas-video-iframe-refined"
-                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&origin=https%3A%2F%2Fbenditocapricho.vercel.app&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  onLoad={() => {
-                    // Force start in case native autoplay fails
-                    if (iframeRef.current) {
-                      iframeRef.current.contentWindow.postMessage(JSON.stringify({
-                        event: 'command', func: 'mute', args: []
-                      }), '*')
-                      iframeRef.current.contentWindow.postMessage(JSON.stringify({
-                        event: 'command', func: 'playVideo', args: []
-                      }), '*')
+                  playing={true}
+                  muted={!hasUnmuted}
+                  loop={true}
+                  width="100%"
+                  height="150%"
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        controls: 0,
+                        showinfo: 0,
+                        rel: 0,
+                        modestbranding: 1,
+                        iv_load_policy: 3,
+                        playsinline: 1,
+                        disablekb: 1,
+                        origin: 'https://benditocapricho.vercel.app'
+                      }
                     }
                   }}
-                ></iframe>
+                  onReady={(player) => {
+                    // Try forcing HD when player is ready
+                    try {
+                      player.getInternalPlayer().setPlaybackQuality('hd1080')
+                    } catch(e) {}
+                  }}
+                />
 
                 {showVolumeIcon && (
                   <div className="saas-volume-indicator-central">
