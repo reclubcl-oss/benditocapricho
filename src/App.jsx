@@ -39,25 +39,38 @@ const TESTIMONIALS = [
 
 export default function App() {
   const [showVolumeIcon, setShowVolumeIcon] = useState(false)
+  const [hasUnmuted, setHasUnmuted] = useState(false)
   const iframeRef = useRef(null)
 
-  const handleHeroClick = () => {
-    if (iframeRef.current) {
-      iframeRef.current.contentWindow.postMessage(JSON.stringify({
-        event: 'command',
-        func: 'unMute',
-        args: ''
-      }), '*')
-      iframeRef.current.contentWindow.postMessage(JSON.stringify({
-        event: 'command',
-        func: 'playVideo',
-        args: ''
-      }), '*')
-      
-      setShowVolumeIcon(true)
-      setTimeout(() => setShowVolumeIcon(false), 1500)
+  // Global click listener to unMute video on first interaction
+  useEffect(() => {
+    const handleGlobalInteraction = () => {
+      if (!hasUnmuted && iframeRef.current) {
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'unMute',
+          args: ''
+        }), '*')
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'playVideo',
+          args: ''
+        }), '*')
+        
+        setShowVolumeIcon(true)
+        setHasUnmuted(true)
+        setTimeout(() => setShowVolumeIcon(false), 2000)
+      }
     }
-  }
+
+    window.addEventListener('click', handleGlobalInteraction)
+    window.addEventListener('touchstart', handleGlobalInteraction)
+
+    return () => {
+      window.removeEventListener('click', handleGlobalInteraction)
+      window.removeEventListener('touchstart', handleGlobalInteraction)
+    }
+  }, [hasUnmuted])
 
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
@@ -85,10 +98,10 @@ export default function App() {
         </div>
       </nav>
 
-      {/* ===== SAAS HERO SECTION ===== */}
-      <section className="saas-hero">
-        <div className="container hero-grid">
-          <div className="hero-content">
+      {/* ===== REFINED CENTERED HERO ===== */}
+      <section className="saas-hero centered">
+        <div className="container hero-centered-stack">
+          <div className="hero-content-center">
             <div className="hero-brand">
               <span className="hero-brand-label">Concept Store</span>
             </div>
@@ -96,19 +109,46 @@ export default function App() {
               BENDITO CAPRICHO <span className="text-gradient">STORE</span>
             </h1>
             <p className="hero-description">
-              Transformamos la visión de tus proyectos en realidades impactantes. Únete a la comunidad de creadores más exclusiva y accede a recursos diseñados para el éxito.
+              Transformamos la visión de tus proyectos en realidades impactantes. Únete a la comunidad de creadores más exclusiva.
             </p>
-            <div className="hero-cta-group">
-              <button className="btn-saas-primary" onClick={scrollToBonuses}>
-                Conoce Nuestra Visión
-              </button>
-              <div className="hero-secondary-info">
-                <span className="info-icon">✓</span>
-                Comunidad Activa
+          </div>
+
+          <div className="hero-visual-large">
+            <div className="video-browser-frame">
+              <div className="browser-header">
+                <div className="dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div className="url-bar">benditocapricho.app</div>
+              </div>
+              <div className="video-container-refined">
+                {/* Translucent overlay to block direct YouTube interactions/redirects */}
+                <div className="video-blocker-overlay" />
+                
+                <iframe
+                  ref={iframeRef}
+                  className="saas-video-iframe-refined"
+                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                ></iframe>
+
+                {showVolumeIcon && (
+                  <div className="saas-volume-indicator-central">
+                    <span>🔊</span>
+                  </div>
+                )}
               </div>
             </div>
+            <div className="glow-effect"></div>
+          </div>
 
-            <div className="hero-mini-stats">
+          <div className="hero-bottom-actions">
+            <button className="btn-saas-primary" onClick={scrollToBonuses}>
+              Conoce Nuestra Visión
+            </button>
+            <div className="hero-mini-stats-center">
               <div className="mini-stat">
                 <span className="stat-num">+500</span>
                 <span className="stat-txt">Miembros</span>
@@ -119,40 +159,10 @@ export default function App() {
               </div>
             </div>
           </div>
-
-          <div className="hero-visual" onClick={handleHeroClick}>
-            <div className="video-browser-frame">
-              <div className="browser-header">
-                <div className="dots">
-                  <span></span><span></span><span></span>
-                </div>
-                <div className="url-bar">benditocapricho.app</div>
-              </div>
-              <div className="video-container">
-                <iframe
-                  ref={iframeRef}
-                  className="saas-video-iframe"
-                  src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                ></iframe>
-                {showVolumeIcon && (
-                  <div className="saas-volume-indicator">
-                    <span>🔊</span>
-                  </div>
-                )}
-                <div className="video-interact-overlay">
-                  <span className="unmute-text">Click para Sonido</span>
-                </div>
-              </div>
-            </div>
-            <div className="glow-effect"></div>
-          </div>
         </div>
       </section>
 
-      {/* Stats bar - Integrated into the flow better */}
+      {/* Features Row */}
       <div className="features-intro">
         <div className="container">
           <div className="stats-row">
@@ -172,7 +182,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* Bonuses - SaaS Feature Style */}
+      {/* Bonuses */}
       <section className="section bg-alt" id="bonos">
         <div className="container">
           <div className="saas-section-header">
@@ -192,7 +202,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Testimonials - SaaS Trust Style */}
+      {/* Testimonials */}
       <section className="section" id="testimonios">
         <div className="container">
           <div className="saas-section-header">
@@ -217,7 +227,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* CTA Final SaaS Style */}
+      {/* CTA */}
       <section className="cta-saas-section">
         <div className="container">
           <div className="cta-saas-content">
@@ -231,7 +241,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer SaaS Style */}
+      {/* Footer */}
       <footer className="saas-footer">
         <div className="container">
           <div className="footer-content">
