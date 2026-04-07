@@ -42,6 +42,18 @@ body {
 .orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.1; animation: orbFloat 25s infinite; }
 .orb-1 { width: 700px; height: 700px; background: var(--accent-pink); top: -200px; right: -100px; }
 .orb-2 { width: 600px; height: 600px; background: var(--accent-purple); bottom: 100px; left: -150px; }
+
+.page-bg-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/images/page-bg-pattern.png');
+  background-repeat: repeat;
+  background-size: 500px auto;
+  opacity: 0.12;
+  filter: blur(8px) saturate(1.4);
+  pointer-events: none;
+}
 @keyframes orbFloat { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, -30px); } }
 
 /* ===== LAYOUT ===== */

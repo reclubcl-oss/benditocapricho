@@ -85,6 +85,9 @@ export default function App() {
         <div className="orb orb-3" />
       </div>
 
+      {/* Page Pattern Background */}
+      <div className="page-bg-pattern" />
+
       {/* Navbar SaaS Style */}
       <nav className="navbar">
         <div className="container nav-content">
