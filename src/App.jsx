@@ -43,28 +43,15 @@ export default function App() {
   const [hasUnmuted, setHasUnmuted] = useState(false)
   const playerRef = useRef(null)
 
-  // Global click listener to unMute video on first interaction
-  useEffect(() => {
-    const handleGlobalInteraction = () => {
-      if (!hasUnmuted && playerRef.current) {
-        
-        // Go back to the very beginning
-        playerRef.current.seekTo(0, 'seconds')
-        
-        setShowVolumeIcon(true)
-        setHasUnmuted(true)
-        setTimeout(() => setShowVolumeIcon(false), 2000)
-      }
+  // Explicit interaction to unmute and play from start
+  const handleUnmuteClick = () => {
+    if (!hasUnmuted && playerRef.current) {
+      playerRef.current.seekTo(0, 'seconds')
+      setShowVolumeIcon(true)
+      setHasUnmuted(true)
+      setTimeout(() => setShowVolumeIcon(false), 2000)
     }
-
-    window.addEventListener('click', handleGlobalInteraction)
-    window.addEventListener('touchstart', handleGlobalInteraction)
-
-    return () => {
-      window.removeEventListener('click', handleGlobalInteraction)
-      window.removeEventListener('touchstart', handleGlobalInteraction)
-    }
-  }, [hasUnmuted])
+  }
 
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
@@ -113,7 +100,14 @@ export default function App() {
             <div className="video-player-container">
               <div className="video-container-refined">
                 {/* Translucent overlay to block direct YouTube interactions/re-directions */}
-                <div className="video-blocker-overlay" />
+                <div className="video-blocker-overlay" onClick={handleUnmuteClick}>
+                  {!hasUnmuted && (
+                    <div className="tap-to-unmute-prompt">
+                      <span className="pulse-icon">🔇</span>
+                      <span>Toca para Audio</span>
+                    </div>
+                  )}
+                </div>
                 
                 <ReactPlayer
                   ref={playerRef}

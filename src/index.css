@@ -148,6 +148,44 @@ body {
   cursor: pointer;
 }
 
+.tap-to-unmute-prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  pointer-events: none; /* Let clicks pass through to the overlay itself */
+  animation: floatUnmute 3s ease-in-out infinite;
+}
+
+.pulse-icon {
+  font-size: 1.2rem;
+  animation: pulseIcon 2s infinite;
+}
+
+@keyframes floatUnmute {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, -55%); }
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .saas-video-iframe-refined {
   position: absolute;
   top: -25%;
