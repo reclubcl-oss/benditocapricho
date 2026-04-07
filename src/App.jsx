@@ -39,34 +39,7 @@ const TESTIMONIALS = [
 ]
 
 export default function App() {
-  const [showVolumeIcon, setShowVolumeIcon] = useState(false)
-  const [hasUnmuted, setHasUnmuted] = useState(false)
   const playerRef = useRef(null)
-
-  // Explicit interaction to unmute and play from start
-  const handleUnmuteClick = () => {
-    if (!hasUnmuted && playerRef.current) {
-      playerRef.current.seekTo(0, 'seconds')
-      setShowVolumeIcon(true)
-      setHasUnmuted(true)
-      setTimeout(() => setShowVolumeIcon(false), 2000)
-    }
-  }
-
-  // Permite que interactuar con CUALQUIER lugar de la página active el audio
-  useEffect(() => {
-    const handleGlobalInteraction = () => {
-      handleUnmuteClick()
-    }
-    
-    document.addEventListener('click', handleGlobalInteraction, { passive: true })
-    document.addEventListener('touchend', handleGlobalInteraction, { passive: true })
-    
-    return () => {
-      document.removeEventListener('click', handleGlobalInteraction)
-      document.removeEventListener('touchend', handleGlobalInteraction)
-    }
-  }, [hasUnmuted])
 
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
@@ -114,22 +87,12 @@ export default function App() {
           <div className="hero-visual-large">
             <div className="video-player-container">
               <div className="video-container-refined">
-                {/* Translucent overlay to block direct YouTube interactions/re-directions */}
-                <div className="video-blocker-overlay" onClick={handleUnmuteClick}>
-                  {!hasUnmuted && (
-                    <div className="tap-to-unmute-prompt">
-                      <span className="pulse-icon">🔇</span>
-                      <span>Toca para Audio</span>
-                    </div>
-                  )}
-                </div>
-                
                 <ReactPlayer
                   ref={playerRef}
                   url="https://www.youtube.com/watch?v=PKkBfjEVO1Q"
                   className="saas-video-iframe-refined"
                   playing={true}
-                  muted={!hasUnmuted}
+                  muted={false} /* FORZADO: Siempre emitir audio, bajo riesgo de que el navegador lo bloquee */
                   loop={true}
                   width="100%"
                   height="150%"
@@ -148,18 +111,11 @@ export default function App() {
                     }
                   }}
                   onReady={(player) => {
-                    // Try forcing HD when player is ready
                     try {
                       player.getInternalPlayer().setPlaybackQuality('hd1080')
                     } catch(e) {}
                   }}
                 />
-
-                {showVolumeIcon && (
-                  <div className="saas-volume-indicator-central">
-                    <span>🔊</span>
-                  </div>
-                )}
               </div>
             </div>
             <div className="glow-effect"></div>
