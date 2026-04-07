@@ -134,12 +134,11 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* 16:9 ASPECT RATIO HACK */
+/* 16:9 ASPECT RATIO */
 .video-container-refined {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 ratio */
-  height: 0;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #000;
 }
@@ -155,14 +154,14 @@ body {
 
 .saas-video-iframe-refined {
   position: absolute;
-  top: 0;
+  /* HIDDEN BRANDING HACK: Make iframe 150% tall so YouTube letterboxes the 16:9 video in the center. */
+  /* The black bars take the YouTube UI. We shift the iframe up by 25% to hide the top bar. */
+  top: -25%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 150%;
   border: none;
-  /* SCALE just enough to HIDE YouTube branding/logo without cutting too much width */
-  transform: scale(1.08);
-  transform-origin: center;
+  pointer-events: none;
 }
 
 .saas-volume-indicator-central {
