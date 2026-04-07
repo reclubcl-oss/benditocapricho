@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import ReactPlayer from 'react-player/youtube'
 import './index.css'
 
@@ -113,7 +113,9 @@ export default function App() {
                   onReady={(player) => {
                     try {
                       player.getInternalPlayer().setPlaybackQuality('hd1080')
-                    } catch(e) {}
+                    } catch(e) {
+                      console.log('Quality API unready:', e)
+                    }
                   }}
                 />
               </div>
