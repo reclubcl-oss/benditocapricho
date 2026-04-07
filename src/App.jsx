@@ -87,25 +87,6 @@ export default function App() {
     }
   }, [hasUnmuted])
 
-  // Initial poke to ensure video starts if autoplay was blocked
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (iframeRef.current) {
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'playVideo',
-          args: []
-        }), '*')
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'setPlaybackQuality',
-          args: ['hd1080']
-        }), '*')
-      }
-    }, 1500)
-    return () => clearTimeout(timer)
-  }, [])
-
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
   }
