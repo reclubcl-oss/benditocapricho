@@ -116,6 +116,9 @@ export default function App() {
           <div className="hero-visual-large">
             <div className="video-player-container">
               <div className="video-container-refined">
+                {/* Translucent overlay to block direct YouTube interactions/re-directions */}
+                <div className="video-blocker-overlay" />
+                
                 <iframe
                   ref={iframeRef}
                   className="saas-video-iframe-refined"

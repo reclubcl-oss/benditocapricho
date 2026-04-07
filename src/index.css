@@ -99,7 +99,7 @@ body {
 .text-gradient { 
   background: var(--gradient-main); 
   -webkit-background-clip: text; 
-  background-clip: text; 
+  background-clip: text;
   -webkit-text-fill-color: transparent; 
 }
 
@@ -132,6 +132,15 @@ body {
   background: #000;
 }
 
+/* THE BLOCKER: transparent div to prevent direct YouTube interactions/redirects */
+.video-blocker-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: transparent;
+  cursor: pointer;
+}
+
 .saas-video-iframe-refined {
   position: absolute;
   top: 0;
@@ -139,6 +148,9 @@ body {
   width: 100%;
   height: 100%;
   border: none;
+  /* SCALE slightly to HIDE YouTube branding/logo */
+  transform: scale(1.15);
+  transform-origin: center;
 }
 
 .saas-volume-indicator-central {
