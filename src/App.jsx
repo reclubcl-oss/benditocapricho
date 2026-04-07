@@ -105,10 +105,13 @@ export default function App() {
       <section className="saas-hero centered">
         <div className="container hero-centered-stack">
           <div className="hero-content-center">
+            <div className="hero-logo-wrapper">
+              <img src="/hero-logo.png" alt="Bendito Capricho" className="hero-main-logo" />
+            </div>
             <div className="hero-brand">
               <span className="hero-brand-label">Concept Store</span>
             </div>
-            <h1 className="hero-title">
+            <h1 className="hero-title" style={{ display: 'none' }}>
               BENDITO CAPRICHO <span className="text-gradient">STORE</span>
             </h1>
             <p className="hero-description">
