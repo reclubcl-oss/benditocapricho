@@ -160,8 +160,8 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  /* SCALE slightly to HIDE YouTube branding/logo */
-  transform: scale(1.15);
+  /* SCALE just enough to HIDE YouTube branding/logo without cutting too much width */
+  transform: scale(1.08);
   transform-origin: center;
 }
 
