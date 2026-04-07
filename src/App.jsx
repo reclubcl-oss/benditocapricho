@@ -92,8 +92,7 @@ export default function App() {
       <nav className="navbar">
         <div className="container nav-content">
           <div className="nav-logo-group">
-            <span className="nav-logo-icon">✦</span>
-            <div className="nav-logo-text">BENDITO CAPRICHO</div>
+            <img src="/hero-logo.png" alt="Bendito Capricho" className="nav-corner-logo" />
           </div>
           <div className="nav-actions">
             <button className="nav-btn-primary" onClick={scrollToBonuses}>Unirse Ahora</button>
@@ -105,13 +104,10 @@ export default function App() {
       <section className="saas-hero centered">
         <div className="container hero-centered-stack">
           <div className="hero-content-center">
-            <div className="hero-logo-wrapper">
-              <img src="/hero-logo.png" alt="Bendito Capricho" className="hero-main-logo" />
-            </div>
             <div className="hero-brand">
               <span className="hero-brand-label">Concept Store</span>
             </div>
-            <h1 className="hero-title" style={{ display: 'none' }}>
+            <h1 className="hero-title">
               BENDITO CAPRICHO <span className="text-gradient">STORE</span>
             </h1>
             <p className="hero-description">

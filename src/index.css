@@ -69,15 +69,11 @@ body {
   backdrop-filter: blur(25px); border-bottom: 1px solid var(--border);
 }
 .nav-content { display: flex; align-items: center; justify-content: space-between; }
-.nav-logo-icon {
-  font-size: 24px;
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.nav-corner-logo {
+  height: 28px; /* Ajusta este valor al tamaño deseado en la esquina */
+  width: auto;
+  display: block;
 }
-
-.nav-logo-text { font-family: var(--font-display); font-weight: 900; letter-spacing: 1px; }
 .nav-btn-primary { padding: 10px 24px; background: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
 /* ===== REFINED CENTERED HERO ===== */
@@ -101,18 +97,6 @@ body {
   display: inline-block; padding: 6px 16px; background: rgba(232, 30, 140, 0.1);
   border: 1px solid rgba(232, 30, 140, 0.2); border-radius: 100px;
   color: var(--accent-pink); font-size: 12px; font-weight: 700; letter-spacing: 2px;
-}
-
-.hero-logo-wrapper {
-  margin-bottom: 30px;
-}
-
-.hero-main-logo {
-  display: block;
-  margin: 0 auto;
-  max-width: 80vw;
-  width: 500px; /* Tamaño generoso para desktop SaaS */
-  height: auto;
 }
 
 .hero-title {
