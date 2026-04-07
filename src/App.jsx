@@ -79,7 +79,7 @@ export default function App() {
         <div className="video-bg-container">
           <iframe
             className="video-bg-iframe"
-            src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3"
+            src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=0&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -87,27 +87,16 @@ export default function App() {
           ></iframe>
         </div>
         <div className="video-overlay" />
-        <div className="video-content">
-          <div className="hero-badge">
-            <span className="hero-badge-dot" />
-            Comunidad activa y en crecimiento
-          </div>
-          <h1 className="hero-title">
-            El Siguiente Paso con{' '}
-            <span className="gradient-text">Bendito Capricho</span>{' '}
-            y Transforma tu Proyecto
-          </h1>
-          <p className="hero-subtitle">
-            Únete a nuestra comunidad exclusiva, accede a recursos premium y lleva tu proyecto al nivel que siempre soñaste.
-          </p>
-          <div className="hero-actions">
-            <button className="btn-primary" onClick={scrollToProducts}>
-              Descubrir Ahora ✦
-            </button>
-            <button className="btn-secondary" onClick={() => document.getElementById('equipo')?.scrollIntoView({ behavior: 'smooth' })}>
-              Conocer el equipo
-            </button>
-          </div>
+        
+        <div className="video-content-simple">
+          <h2 className="hero-top-text">BENDITO CAPRICHO CONCEPT STORE</h2>
+          
+          <div className="hero-spacer" />
+          
+          <button className="hero-bottom-btn" onClick={() => document.getElementById('equipo')?.scrollIntoView({ behavior: 'smooth' })}>
+            CONOCE NUESTRA VISIÓN
+            <span className="btn-arrow">↓</span>
+          </button>
         </div>
 
         {/* Scroll indicator */}
