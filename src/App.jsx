@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react'
 import './index.css'
 
 const TEAM = [
@@ -61,6 +62,29 @@ const TESTIMONIALS = [
 ]
 
 export default function App() {
+  const [showVolumeIcon, setShowVolumeIcon] = useState(false)
+  const iframeRef = useRef(null)
+
+  const handleHeroClick = () => {
+    if (iframeRef.current) {
+      // Send unMute and playVideo commands to YouTube iframe
+      iframeRef.current.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'unMute',
+        args: ''
+      }), '*')
+      iframeRef.current.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'playVideo',
+        args: ''
+      }), '*')
+      
+      // Show sound icon briefly
+      setShowVolumeIcon(true)
+      setTimeout(() => setShowVolumeIcon(false), 1500)
+    }
+  }
+
   const scrollToProducts = () => {
     document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -75,19 +99,25 @@ export default function App() {
       </div>
 
       {/* ===== VIDEO HERO ===== */}
-      <section className="video-hero">
+      <section className="video-hero" onClick={handleHeroClick}>
         <div className="video-bg-container">
           <iframe
+            ref={iframeRef}
             className="video-bg-iframe"
-            src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=0&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3"
+            src="https://www.youtube.com/embed/PKkBfjEVO1Q?autoplay=1&mute=1&loop=1&playlist=PKkBfjEVO1Q&controls=0&showinfo=0&rel=0&enablejsapi=1&modestbranding=1&iv_load_policy=3&playsinline=1"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
           ></iframe>
         </div>
         <div className="video-overlay" />
         
+        {showVolumeIcon && (
+          <div className="volume-indicator">
+            <span className="volume-emoji">🔊</span>
+          </div>
+        )}
+
         <div className="video-content-simple">
           <h2 className="hero-top-text">BENDITO CAPRICHO CONCEPT STORE</h2>
           
