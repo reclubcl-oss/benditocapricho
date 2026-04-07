@@ -143,6 +143,17 @@ export default function App() {
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  onLoad={() => {
+                    // Force start in case native autoplay fails
+                    if (iframeRef.current) {
+                      iframeRef.current.contentWindow.postMessage(JSON.stringify({
+                        event: 'command', func: 'mute', args: []
+                      }), '*')
+                      iframeRef.current.contentWindow.postMessage(JSON.stringify({
+                        event: 'command', func: 'playVideo', args: []
+                      }), '*')
+                    }
+                  }}
                 ></iframe>
 
                 {showVolumeIcon && (
