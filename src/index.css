@@ -152,12 +152,8 @@ body {
   position: absolute;
   top: -25%;
   left: 0;
-  /* HACK ALTA CALIDAD: Forzamos un tamaño interno 4 veces más grande para que YouTube sirva HD (1080p),
-     y luego lo escalamos con CSS para encajar visualmente. */
-  width: 400%;
-  height: 600%;
-  transform: scale(0.25);
-  transform-origin: top left;
+  width: 100%;
+  height: 150%;
   border: none;
   pointer-events: none;
 }

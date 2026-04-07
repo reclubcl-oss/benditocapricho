@@ -52,6 +52,12 @@ export default function App() {
           func: 'playVideo',
           args: []
         }), '*')
+        // Force HD quality via JS API if possible
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'setPlaybackQuality',
+          args: ['hd1080']
+        }), '*')
         
         // Go back to the very beginning
         iframeRef.current.contentWindow.postMessage(JSON.stringify({
@@ -89,6 +95,11 @@ export default function App() {
           event: 'command',
           func: 'playVideo',
           args: []
+        }), '*')
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'setPlaybackQuality',
+          args: ['hd1080']
         }), '*')
       }
     }, 1500)
