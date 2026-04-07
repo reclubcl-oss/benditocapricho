@@ -53,6 +53,21 @@ export default function App() {
     }
   }
 
+  // Permite que interactuar con CUALQUIER lugar de la página active el audio
+  useEffect(() => {
+    const handleGlobalInteraction = () => {
+      handleUnmuteClick()
+    }
+    
+    document.addEventListener('click', handleGlobalInteraction, { passive: true })
+    document.addEventListener('touchend', handleGlobalInteraction, { passive: true })
+    
+    return () => {
+      document.removeEventListener('click', handleGlobalInteraction)
+      document.removeEventListener('touchend', handleGlobalInteraction)
+    }
+  }, [hasUnmuted])
+
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
   }
