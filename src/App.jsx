@@ -96,8 +96,11 @@ export default function App() {
         )}
 
         <div className="video-content-simple">
-          <div className="hero-logo-box">
-            <img src="/hero-title.png" className="hero-title-img" alt="Bendito Capricho Concept Store" />
+          <div className="hero-header-content">
+            <h1 className="hero-main-title">BENDITO CAPRICHO STORE</h1>
+            <div className="hero-logo-box">
+              <img src="/hero-logo.png" className="hero-title-img" alt="Bendito Capricho Logo" />
+            </div>
           </div>
           
           <div className="hero-spacer" />
