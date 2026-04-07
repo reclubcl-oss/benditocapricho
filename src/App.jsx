@@ -46,14 +46,23 @@ export default function App() {
   useEffect(() => {
     const handleGlobalInteraction = () => {
       if (!hasUnmuted && iframeRef.current) {
-        iframeRef.current.contentWindow.postMessage(JSON.stringify({
-          event: 'command',
-          func: 'unMute',
-          args: []
-        }), '*')
+        // Re-send play to kickstart if mobile browser blocked initial autoplay
         iframeRef.current.contentWindow.postMessage(JSON.stringify({
           event: 'command',
           func: 'playVideo',
+          args: []
+        }), '*')
+        
+        // Go back to the very beginning
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'seekTo',
+          args: [0, true]
+        }), '*')
+
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'unMute',
           args: []
         }), '*')
         
@@ -71,6 +80,20 @@ export default function App() {
       window.removeEventListener('touchstart', handleGlobalInteraction)
     }
   }, [hasUnmuted])
+
+  // Initial poke to ensure video starts if autoplay was blocked
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (iframeRef.current) {
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: 'playVideo',
+          args: []
+        }), '*')
+      }
+    }, 1500)
+    return () => clearTimeout(timer)
+  }, [])
 
   const scrollToBonuses = () => {
     document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
