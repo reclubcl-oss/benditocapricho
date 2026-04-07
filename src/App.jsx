@@ -1,13 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import './index.css'
 
-const TEAM = [
-  { name: 'Cote', role: 'Marketing & Creación', initial: 'C' },
-  { name: 'Dani', role: 'Área Comercial', initial: 'D' },
-  { name: 'David', role: 'Logística', initial: 'D' },
-  { name: 'David', role: 'Soporte Web', initial: 'D' },
-]
-
 const BONUSES = [
   {
     icon: '🌐',
@@ -23,23 +16,6 @@ const BONUSES = [
     icon: '🎓',
     title: 'Entrenamiento Premium',
     desc: 'Recibe acceso a capacitaciones y entrenamientos de alto nivel diseñados específicamente para potenciar tu proyecto.',
-  },
-]
-
-const PRODUCTS = [
-  {
-    emoji: '🪟',
-    badge: 'MÁS POPULAR',
-    name: 'VITRINA ADAPTABLE',
-    description: 'La solución perfecta para mostrar y vender tus proyectos de manera profesional y efectiva, adaptada a tus necesidades específicas.',
-    price: '$185.000',
-  },
-  {
-    emoji: '✨',
-    badge: 'PREMIUM',
-    name: 'PACK COMPLETO',
-    description: 'Todo lo que necesitas para llevar tu proyecto al siguiente nivel. Incluye todos los recursos y acceso a la comunidad por tiempo ilimitado.',
-    price: '$320.000',
   },
 ]
 
@@ -85,8 +61,8 @@ export default function App() {
     }
   }
 
-  const scrollToProducts = () => {
-    document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToBonuses = () => {
+    document.getElementById('bonos')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -108,6 +84,7 @@ export default function App() {
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            preload="auto"
           ></iframe>
         </div>
         <div className="video-overlay" />
@@ -119,11 +96,13 @@ export default function App() {
         )}
 
         <div className="video-content-simple">
-          <h2 className="hero-top-text">BENDITO CAPRICHO CONCEPT STORE</h2>
+          <div className="hero-logo-box">
+            <img src="/hero-title.png" className="hero-title-img" alt="Bendito Capricho Concept Store" />
+          </div>
           
           <div className="hero-spacer" />
           
-          <button className="hero-bottom-btn" onClick={() => document.getElementById('equipo')?.scrollIntoView({ behavior: 'smooth' })}>
+          <button className="hero-bottom-btn" onClick={scrollToBonuses}>
             CONOCE NUESTRA VISIÓN
             <span className="btn-arrow">↓</span>
           </button>
@@ -135,11 +114,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* Navbar - after video so it floats over */}
+      {/* Navbar - Simplified */}
       <nav className="navbar">
         <div className="container">
           <div className="nav-logo">BENDITO CAPRICHO</div>
-          <button className="nav-btn" onClick={scrollToProducts}>Ver Vitrinas</button>
         </div>
       </nav>
 
@@ -163,35 +141,13 @@ export default function App() {
         </div>
       </div>
 
-      {/* Team */}
-      <section className="section" id="equipo">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Nuestro Equipo</span>
-            <h2 className="section-title">Las personas detrás<br />de Bendito Capricho</h2>
-            <p className="section-subtitle">Un equipo apasionado comprometido con el éxito de tu proyecto.</p>
-          </div>
-          <div className="team-grid">
-            {TEAM.map((member, i) => (
-              <div key={i} className="glass-card team-card">
-                <div className="team-avatar">{member.initial}</div>
-                <div className="team-name">{member.name}</div>
-                <div className="team-role">{member.role}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="divider" />
-
       {/* Bonuses */}
       <section className="section" id="bonos">
         <div className="container">
           <div className="section-header">
             <span className="section-label">Exclusivo</span>
-            <h2 className="section-title">Bonos que transforman<br />tu experiencia</h2>
-            <p className="section-subtitle">Al unirte, recibes acceso inmediato a todos estos beneficios exclusivos.</p>
+            <h2 className="section-title">Nuestra Visión y<br />Bonos Exclusivos</h2>
+            <p className="section-subtitle">Lo que nos mueve y los beneficios que recibes al formar parte de nuestra comunidad.</p>
           </div>
           <div className="bonuses-grid">
             {BONUSES.map((bonus, i) => (
@@ -199,33 +155,6 @@ export default function App() {
                 <span className="bonus-icon">{bonus.icon}</span>
                 <div className="bonus-title">{bonus.title}</div>
                 <p className="bonus-desc">{bonus.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="divider" />
-
-      {/* Products */}
-      <section className="section" id="productos">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Productos</span>
-            <h2 className="section-title">Conoce Nuestros<br />Productos</h2>
-            <p className="section-subtitle">Soluciones diseñadas para impulsar tu proyecto y multiplicar tus resultados.</p>
-          </div>
-          <div className="products-grid">
-            {PRODUCTS.map((product, i) => (
-              <div key={i} className="glass-card product-card">
-                <div className="product-image">{product.emoji}</div>
-                <div className="product-info">
-                  <div className="product-badge">{product.badge}</div>
-                  <div className="product-name">{product.name}</div>
-                  <p className="product-description">{product.description}</p>
-                  <div className="product-price">{product.price}</div>
-                  <button className="product-btn">Obtener Acceso →</button>
-                </div>
               </div>
             ))}
           </div>
@@ -264,10 +193,10 @@ export default function App() {
       <section className="cta-section">
         <div className="container">
           <div className="cta-card">
-            <h2 className="cta-title">¿Listo para el siguiente paso?</h2>
-            <p className="cta-subtitle">Únete ahora y empieza a transformar tu proyecto con el apoyo de nuestra comunidad.</p>
-            <button className="btn-primary" onClick={scrollToProducts}>
-              Empezar Ahora ✦
+            <h2 className="cta-title">¿Listo para unirte a la visión?</h2>
+            <p className="cta-subtitle">Únete ahora y empieza a transformar tu proyecto con el apoyo de nuestra comunidad estratégica.</p>
+            <button className="btn-primary" onClick={scrollToBonuses}>
+              Únete a la Comunidad ✦
             </button>
           </div>
         </div>
