@@ -109,7 +109,7 @@ body {
 .hero-visual-large {
   position: relative;
   width: 80%; /* DESKTOP */
-  max-width: 1200px;
+  max-width: 1920px; /* FULL HD SCALE */
   margin: 0 auto;
   animation: fadeInUp 1s ease-out;
 }
